@@ -21,9 +21,10 @@ Here are direct links to the notebooks:
 3. [More complex randomness](https://github.com/aesidau/quantumrandom/blob/main/02_Other%20random%20distributions%20on%20quantum%20computers.ipynb) - how to generate non-uniform distributions of random bits
 4. [Digital computation](https://github.com/aesidau/quantumrandom/blob/main/03_Digital%20operations%20on%20quantum%20computers.ipynb) - how to perform traditional digital computation on a quantum computer
 5. [Grover's algorithm](https://github.com/aesidau/quantumrandom/blob/main/04_Solving%20a%20problem%20with%20quantum%20computers.ipynb) - how to use a quantum computer to find a solution that would require brute-forcing on a digital computer
+6. [Finding patterns](https://github.com/aesidau/quantumrandom/blob/main/05_Finding%20patterns%20with%20quantum%20computers.ipynb) - how the Quantum Fourier Transform finds hidden periods in a state vector, the key ingredient in Shor's algorithm
 
 If you want to just read the material, jump straight to the [simple algorithm notebook](https://github.com/aesidau/quantumrandom/blob/main/01_A%20simple%20and%20useful%20quantum%20algorithm.ipynb).
 
-These notebooks are also a proof-of-concept for how a quantum computing course or book might be developed that doesn't use circuit notation, Bloch Spheres, complex numbers or linear algebra. However, there is some highschool-level mathematics involved, such as fractions, square roots, and addition/multiplication.
+These notebooks are also a proof-of-concept for how a quantum computing course or book might be developed that doesn't use circuit notation, Bloch Spheres, or linear algebra. Notebook 05 introduces directional probability amplitudes (using a clock-hand analogy rather than complex number notation), so there is a small extension to the mathematical model at that point. Otherwise, the series requires only highschool-level mathematics: fractions, square roots, and addition/multiplication.
 
 Enjoy!
