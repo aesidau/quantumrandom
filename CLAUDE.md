@@ -27,10 +27,11 @@ Scripts produce matplotlib histogram plots using `plt.show()` — requires a dis
 
 ## Dependencies
 
-The code uses `qiskit` with `BasicAer` as the local simulator backend:
+The code uses `qiskit` with `qiskit-aer` as the local simulator backend:
 ```python
-from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, execute, BasicAer
-backend = BasicAer.get_backend('qasm_simulator')
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, transpile
+from qiskit_aer import AerSimulator
+backend = AerSimulator()
 ```
 
 State vector inspection uses `qiskit.quantum_info.Statevector`, and visualization uses `qiskit.visualization.plot_histogram` + `matplotlib`.

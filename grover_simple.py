@@ -2,10 +2,11 @@
 #   04_Solving a problem with quantum computers
 # Simplified, so is just the parts to perform Grover's algorithm on 3 qubits
 import numpy as np
-from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, execute, BasicAer
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, transpile
 from qiskit.visualization import plot_histogram
+from qiskit_aer import AerSimulator
 import matplotlib.pyplot as plt
-backend = BasicAer.get_backend('qasm_simulator')
+backend = AerSimulator()
 
 # Verifies that a proposed solution is correct only when it is |10>
 # ** Change this function to have Grover's produce a different result
@@ -50,6 +51,6 @@ add_verify_with_h(algo4)     # Step 2 of Grover's: flip the solution row
 add_amplify(algo4)           # Step 3 of Grover's: amplify negative rows
 
 algo4.measure(q[0:2], c)     # Measure the two qubits 0 and 1, get some bits
-result = execute(algo4, backend, shots=1000).result() # Run this all 1,000 x
-plot_histogram(result.get_counts(algo4))              # Show a histogram 
+result = backend.run(transpile(algo4, backend), shots=1000).result() # Run this all 1,000 x
+plot_histogram(result.get_counts())                                  # Show a histogram
 plt.show()

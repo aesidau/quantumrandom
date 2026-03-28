@@ -1,11 +1,12 @@
 # Python code that relates to the notebook 
 #   01_A simple and useful quantum algorithm.ipynb
 import numpy as np
-from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, execute, BasicAer
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, transpile
 from qiskit.quantum_info import Statevector
 from qiskit.visualization import plot_histogram
+from qiskit_aer import AerSimulator
 import matplotlib.pyplot as plt
-backend = BasicAer.get_backend('qasm_simulator')
+backend = AerSimulator()
 
 q = QuantumRegister(2)   # We want to use 2 qubits
 algo = QuantumCircuit(q) # Readies us to construct an algorithm to run on the quantum computer
@@ -23,6 +24,6 @@ print(np.real_if_close(v3.data))
 
 algo.measure_all()  # Measure the qubits and get some bits
 
-result = execute(algo, backend, shots=1000).result()  # Run this all 1,000 times
-plot_histogram(result.get_counts(algo))
+result = backend.run(transpile(algo, backend), shots=1000).result()  # Run this all 1,000 times
+plot_histogram(result.get_counts())
 plt.show()
