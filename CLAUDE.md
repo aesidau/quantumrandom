@@ -63,11 +63,11 @@ These principles govern how new content should be written or extended:
 
 4. **Progressive complexity with explicit bridges.** Each notebook opens by referencing what was established previously and explains why the next concept is a natural extension. Complexity is never introduced without a connecting sentence.
 
-5. **Analogies grounded in everyday experience.** Abstract ideas are anchored to familiar things: the coin-flipping robot (qubit vs. bit), coins always landing matched (Bell state), carrying a digit when counting (increment circuit).
+5. **Analogies grounded in everyday experience.** Abstract ideas are anchored to things familiar to highschool-level software developers: the coin-flipping robot (qubit vs. bit), coins always landing matched (Bell state), carrying a digit when counting (increment circuit).
 
-6. **Demystify the strange early.** Negative probability amplitudes are introduced in notebook 02, not deferred. Directional (complex) amplitudes are introduced in notebook 05 using a clock-hand analogy rather than complex number notation. Strangeness is named and defused, not avoided.
+6. **Demystify the strange early.** Negative probability amplitudes are introduced in notebook 02, not deferred. Directional (complex) amplitudes are introduced in notebook 05 using a magnitude + direction form rather than complex number notation. Strangeness is named and defused, not avoided.
 
-7. **Deliberate vocabulary.** Physics jargon (superposition, entanglement, interference) is avoided. Quantum circuit terminology (circuit, gate) is avoided. Operations get plain names: H is "half," CX is "constrained swap," CCX is "doubly constrained swap," Z is "flip," P is "phase rotation," CP is "constrained phase rotation." These names reflect what the operation does, not its physics origin.
+7. **Deliberate vocabulary.** Physics jargon (superposition, entanglement, interference) is avoided. Quantum circuit terminology (circuit, gate) is avoided. Classical computers are called digital computers. Operations get plain names: H is "half," CX is "constrained swap," CCX is "doubly constrained swap," Z is "flip," P is "phase rotation," CP is "constrained phase rotation." These names reflect what the operation does, not its physics origin.
 
 8. **Accumulating summary tables.** Each notebook ends with (or contributes to) a reference table of all operations introduced so far — name, short description, and detailed description. The table grows across notebooks, reinforcing prior learning.
 
