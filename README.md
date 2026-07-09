@@ -25,6 +25,6 @@ Here are direct links to the notebooks:
 
 If you want to just read the material, jump straight to the [simple algorithm notebook](https://github.com/aesidau/quantumrandom/blob/main/01_A%20simple%20and%20useful%20quantum%20algorithm.ipynb).
 
-These notebooks are also a proof-of-concept for how a quantum computing course or book might be developed that doesn't use circuit notation, Bloch Spheres, or linear algebra. Notebook 05 introduces directional probability amplitudes (using a clock-hand analogy rather than complex number notation), so there is a small extension to the mathematical model at that point. Otherwise, the series requires only highschool-level mathematics: fractions, square roots, and addition/multiplication.
+These notebooks are also a proof-of-concept for how a quantum computing course or book might be developed that doesn't use circuit notation, Bloch Spheres, or linear algebra. Notebook 05 introduces directional probability amplitudes (using a directional arrow analogy rather than complex number notation), so there is a small extension to the mathematical model at that point. Otherwise, the series requires only highschool-level mathematics: fractions, square roots, and addition/multiplication.
 
 Enjoy!
