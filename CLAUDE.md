@@ -21,6 +21,7 @@ python thirds.py
 python increment.py
 python grover_simple.py
 python grover.py
+python qft.py
 ```
 
 Scripts produce matplotlib histogram plots using `plt.show()` — requires a display environment.
@@ -87,7 +88,7 @@ Displaying complex amplitudes as magnitude + compass direction (notebook 05):
 ```python
 DIRECTIONS = {0: '→', 45: '↗', 90: '↑', 135: '↖', 180: '←', 225: '↙', 270: '↓', 315: '↘'}
 
-def show_statevector(circuit, n):
+def show_statevector(circuit):
     v = Statevector(circuit)
     for i, amp in enumerate(v.data):
         # shows "+0.707" for real values, "magnitude 0.707, direction 90°  ↑" for complex

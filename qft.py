@@ -34,43 +34,45 @@ def angle_to_pi_str(angle_rad):
     if num == -1: return f'-π/{den}'
     return f'{num}π/{den}'
 
-def show_statevector(algo, n):
+def show_statevector(algo):
     """Display the state vector, showing direction and magnitude for complex amplitudes."""
+    n = algo.num_qubits
     v = Statevector(algo)
     data = v.data
-    print(f"{'Row':>3}  {'State':>{n+2}}  Amplitude")
+    print(f"Qubits  {' ':>{n+2}}State vector")
     print('-' * (n + 28))
     for i, amp in enumerate(data):
-        state = f"|{format(i, f'0{n}b')}⟩"
+        state = f"|{format(i, f'0{n}b')}>"
         if abs(amp) < 0.001:
-            val = '0'
+            val = '0.0'
         elif abs(amp.imag) < 0.001:
-            val = f'{amp.real:+.3f}'
+            val = f'{amp.real:.3f}'
         else:
             mag = abs(amp)
             angle_rad = np.angle(amp)
             sym = direction_symbol(angle_rad)
-            val = f'magnitude {mag:.3f}, direction {angle_to_pi_str(angle_rad)}  {sym}'
-        print(f' {i:2d}  {state:>{n+2}}  {val}')
+            val = f'{mag:.3f}, direction {angle_to_pi_str(angle_rad)}  {sym}'
+        print(f'{state:>{n+2}} (|{i}>)  {val}')
 
 algo1 = QuantumCircuit(1)
 algo1.h(0)
 print('After H:')
-show_statevector(algo1, 1)
+show_statevector(algo1)
 
 print()
 
-algo1.p(np.pi / 2, 0)   # P(π/2) — rotate |1⟩ row by π/2
+algo1.p(np.pi / 2, 0)   # P(π/2) — rotate second row by π/2
 print('After P(π/2):')
-show_statevector(algo1, 1)
+show_statevector(algo1)
 
 # Uniform pattern: both rows have the same value.
 # H creates it, then H again detects it — collapses to row 0.
 algo2 = QuantumCircuit(1)
 algo2.h(0)  # creates uniform probability distribution
+show_statevector(algo2)
 algo2.h(0)  # H detects the uniform pattern
 print('Uniform pattern → H detects frequency 0 (no repeating pattern):')
-show_statevector(algo2, 1)
+show_statevector(algo2)
 
 print()
 
@@ -79,38 +81,48 @@ print()
 algo3 = QuantumCircuit(1)
 algo3.x(0)   # |1>
 algo3.h(0)   # creates (|0> - |1>)/√2: an alternating pattern
+show_statevector(algo3)
 algo3.h(0)   # H detects the alternating pattern
 print('Alternating pattern → H detects frequency 1 (period 2):')
-show_statevector(algo3, 1)
+show_statevector(algo3)
 
-def add_qft(algo, qubits):
+def add_reverse_cols(algo, qubits, debug=False):
+    """Reverse the specified columns."""
+    n = len(qubits)
+    for i in range(n // 2):
+        if debug: print(f"SWAP({qubits[i]}, {qubits[n - 1 - i]})")
+        algo.swap(qubits[i], qubits[n - 1 - i])
+
+def add_qft(algo, qubits, debug=False):
     """Apply the Quantum Fourier Transform to the specified qubits."""
     n = len(qubits)
     for i in range(n - 1, -1, -1):
         algo.h(qubits[i])
+        if debug:
+            print(f"H({qubits[i]})")
+            show_statevector(algo)
         for j in range(i - 1, -1, -1):
             angle = np.pi / 2 ** (i - j)
             algo.cp(angle, qubits[j], qubits[i])
-    for i in range(n // 2):
-        algo.swap(qubits[i], qubits[n - 1 - i])
+            if debug:
+                print(f"CP({angle}, {qubits[j]}, {qubits[i]})")
+                show_statevector(algo)
+    add_reverse_cols(algo, qubits, debug)
 
-# Prepare a period-2 state: non-zero at rows 0, 2, 4, 6
+# Prepare a frequency 2 state: non-zero at rows 0 and 4
 algo4 = QuantumCircuit(3)
-algo4.h(1)
 algo4.h(2)
-
-print('Period-2 state (non-zero at rows 0, 2, 4, 6):')
-show_statevector(algo4, 3)
+print('Frequency 2 state (non-zero at rows 0 and 4):')
+show_statevector(algo4)
 
 # Now we apply the QFT to this periodic state and inspect what comes out.
-add_qft(algo4, [0, 1, 2])
+add_qft(algo4, [0, 1, 2], debug=True)
 
 print('After QFT:')
-show_statevector(algo4, 3)
+show_statevector(algo4)
 
 # Measure and run
 algo5 = QuantumCircuit(3)
-algo5.h(1)
 algo5.h(2)
 add_qft(algo5, [0, 1, 2])
 algo5.measure_all()
@@ -120,3 +132,21 @@ counts = result.get_counts()
 print('Measurement results:', counts)
 plot_histogram(counts)
 plt.show()
+
+# Prepare a period 3 state: non-zero at rows 0, 3 and 6
+angle1 = 2 * np.arcsin(np.sqrt(1.0/3.0))
+angle2 = np.pi / 4
+algo6 = QuantumCircuit(3)
+algo6.ry(angle1, 1)
+algo6.h(0)
+algo6.ry(angle2, 0)
+algo6.cx(1,0)
+algo6.ry(-angle2, 0)
+algo6.cx(1,2)
+algo6.cx(0,1)
+print('Period 3 state (non-zero at rows 0, 3 and 6):')
+show_statevector(algo6)
+
+add_qft(algo6, [0, 1, 2], debug=True)
+print('After QFT:')
+show_statevector(algo6)
